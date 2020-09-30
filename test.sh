@@ -21,6 +21,8 @@ function pause(){
 # Introduction
 # ------------
 
+echo -e "${GREEN}Configuring your development environment... ${NC}"
+
 echo
 echo -e "${LCYAN}/* ************************************************************************** */"
 echo -e "/*                                                                           ${LCYAN} */"
