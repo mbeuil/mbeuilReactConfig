@@ -21,8 +21,6 @@ function pause(){
 # Introduction
 # ------------
 
-echo -e "${GREEN}Configuring your development environment... ${NC}"
-
 echo
 echo -e "${LCYAN}/* ************************************************************************** */"
 echo -e "/*                                                                           ${LCYAN} */"
@@ -34,7 +32,7 @@ echo -e "/*   ${NC}Created: 2019/04/01 19:30:42 by mbeuil       +#+#+#+#+#+   +#
 echo -e "/*   ${NC}                                                  #+#    #+#       ${LCYAN}      */"
 echo -e "/*   ${NC}Press ${LCYAN}[Enter]${NC} key to continue                    ###   ########.fr  ${LCYAN}     */"
 echo -e "/*                                                                            */"
-echo -e "/* ************************************************************************** */${LCYAN}"
+echo -e "/* ************************************************************************** */${LCYAN}"${NC}
 echo
 
 
