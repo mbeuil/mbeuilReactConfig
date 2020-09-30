@@ -24,13 +24,13 @@ function pause(){
 echo
 echo -e "${LCYAN}/* ************************************************************************** */"
 echo -e "/*                                                                           ${LCYAN} */"
-echo -e "/*   ${NC}By: ${LCYAN}mbeuil${NC}                                           :::      ::::::::${LCYAN}   */"
-echo -e "/*   ${NC}                                                   :+:      :+:    :+: ${LCYAN}  */"
-echo -e "/*   ${NC}Git: @mbeuil                                     +:+ +:+         +:+  ${LCYAN}   */"
-echo -e "/*   ${NC}                                               +#+  +:+       +#+    ${LCYAN}    */"
-echo -e "/*   ${NC}Created: 2019/04/01 19:30:42 by mbeuil       +#+#+#+#+#+   +#+      ${LCYAN}     */"
-echo -e "/*   ${NC}                                                  #+#    #+#       ${LCYAN}      */"
-echo -e "/*   ${NC}Press ${LCYAN}[Enter]${NC} key to continue                    ###   ########.fr  ${LCYAN}     */"
+echo -e "/*   ${NC}By: ${LCYAN}mbeuil${NC}                                      :::      :::  ::::::::${LCYAN}   */"
+echo -e "/*   ${NC}                                               :+::    ::+:  :+:     :+: ${LCYAN}*/"
+echo -e "/*   ${NC}Git: @mbeuil                                  +:+ :  : +:+  +:+     +:+  ${LCYAN}*/"
+echo -e "/*   ${NC}                                             +#+  +#+ +#+  +#++#++#+   ${LCYAN}  */"
+echo -e "/*   ${NC}Created: 2020/10/01                         +#+      +#+  +#+      +#+  ${LCYAN} */"
+echo -e "/*   ${NC}                                           #+#      #+#  #+#     #+# ${LCYAN}    */"
+echo -e "/*   ${NC}Press ${LCYAN}[Enter]${NC} key to continue             ###      ###  ##########  ${LCYAN}     */"
 echo -e "/*                                                                            */"
 echo -e "/* ************************************************************************** */${LCYAN}"${NC}
 echo
@@ -104,17 +104,17 @@ echo
 echo -e "${GREEN}Configuring your development environment... ${NC}"
 
 echo
-echo -e "1/5 ${LCYAN}Prettier Installation... ${NC}"
+echo -e "1/6 ${LCYAN}Prettier Installation... ${NC}"
 echo
 $pkg_cmd -D eslint prettier
 
 echo
-echo -e "2/5 ${LCYAN}Eslint Installation with airbnb's config... ${NC}"
+echo -e "2/6 ${LCYAN}Eslint Installation with airbnb's config... ${NC}"
 echo
 npx install-peerdeps --dev eslint-config-airbnb
 
 echo
-echo -e "3/5 ${LCYAN}Making ESlint and Prettier play nice with each other... ${NC}"
+echo -e "3/6 ${LCYAN}Making ESlint and Prettier play nice with each other... ${NC}"
 echo "See https://github.com/prettier/eslint-config-prettier for more details."
 echo
 $pkg_cmd -D eslint-config-prettier eslint-plugin-prettier
@@ -124,7 +124,7 @@ if [ "$skip_eslint_setup" == "true" ]; then
   break
 else
   echo
-  echo -e "4/5 ${YELLOW}Building your .eslintrc${config_extension} file...${NC}"
+  echo -e "4/6 ${YELLOW}Building your .eslintrc${config_extension} file...${NC}"
   > ".eslintrc${config_extension}" # truncates existing file (or creates empty)
 
   echo ${config_opening}'
@@ -142,10 +142,11 @@ else
     "node": true
   },
   "rules": {
+    "no-console": "off",
     "react/jsx-filename-extension": [
       1,
       {"extensions": [".js", ".jsx", ".ts", ".tsx"]}
-    ],
+    ]
   }
 }' >> .eslintrc${config_extension}
 fi
@@ -154,7 +155,7 @@ fi
 if [ "$skip_prettier_setup" == "true" ]; then
   break
 else
-  echo -e "5/5 ${YELLOW}Building your .prettierrc${config_extension} file... ${NC}"
+  echo -e "5/6 ${YELLOW}Building your .prettierrc${config_extension} file... ${NC}"
   > .prettierrc${config_extension} # truncates existing file (or creates empty)
 
   echo ${config_opening}'
@@ -272,12 +273,6 @@ fi
 # Check for conflict
 # ------------------
 
-# between eslint and prettier
-
-echo
-echo -e "${LCYAN}Check conflict rules between eslint and prettier... ${NC}"
-echo
-npx eslint --print-config path/to/main.js | npx eslint-config-prettier-check
 
 # CSS in JS libraries
 
@@ -290,6 +285,9 @@ select css_library_choices in "emotion" "styled-components" "Cancel"; do
     Cancel ) exit;;
   esac
 done
+
+echo
+echo -e "${YELLOW}Installing yout CSS in JS library...${NC}"
 
 echo
 $css_cmd
