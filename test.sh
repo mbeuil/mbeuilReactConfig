@@ -35,6 +35,32 @@ echo -e "/*                                                                     
 echo -e "/* ************************************************************************** */${LCYAN}"${NC}
 echo
 
+# ---------------------
+# REACT APP CONFIG TOOL 
+# ---------------------
+
+# App name selection
+echo -e "Name your new ${YELLOW}React App ${NC}:"
+read app_name
+echo
+
+# Framework Manager prompt
+
+echo "Starting a new React APP"
+select framework_choices in "create-react-app" "Cancel"; do
+  case $framework_choices in
+    create-react-app ) framework_init="npx create-react-app ${app_name}"; break;;
+    Cancel ) exit;;
+  esac
+done
+echo
+
+echo -e "${LCYAN}Creating your repo and installing your ${app_name} react app... ${NC}"
+$framework_init
+
+echo
+echo "Switch to ${app_name} directory"
+cd ${app_name}
 
 # --------------------------------------
 # Prompts for configuration preferences
