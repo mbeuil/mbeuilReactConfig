@@ -22,17 +22,17 @@ function pause(){
 # ------------
 
 echo
-echo "${LCYAN}/* ************************************************************************** */"
-echo "/*                                                                           ${LCYAN} */"
-echo "/*   ${NC}By: ${LCYAN}mbeuil${NC}                                           :::      ::::::::${LCYAN}   */"
-echo "/*   ${NC}                                                   :+:      :+:    :+: ${LCYAN}  */"
-echo "/*   ${NC}Git: @mbeuil                                     +:+ +:+         +:+  ${LCYAN}   */"
-echo "/*   ${NC}                                               +#+  +:+       +#+    ${LCYAN}    */"
-echo "/*   ${NC}Created: 2019/04/01 19:30:42 by mbeuil       +#+#+#+#+#+   +#+      ${LCYAN}     */"
-echo "/*   ${NC}                                                  #+#    #+#       ${LCYAN}      */"
-echo "/*   ${NC}Press ${LCYAN}[Enter]${NC} key to continue                    ###   ########.fr  ${LCYAN}     */"
-echo "/*                                                                            */"
-echo "/* ************************************************************************** */${LCYAN}"
+echo -e "${LCYAN}/* ************************************************************************** */"
+echo -e "/*                                                                           ${LCYAN} */"
+echo -e "/*   ${NC}By: ${LCYAN}mbeuil${NC}                                           :::      ::::::::${LCYAN}   */"
+echo -e "/*   ${NC}                                                   :+:      :+:    :+: ${LCYAN}  */"
+echo -e "/*   ${NC}Git: @mbeuil                                     +:+ +:+         +:+  ${LCYAN}   */"
+echo -e "/*   ${NC}                                               +#+  +:+       +#+    ${LCYAN}    */"
+echo -e "/*   ${NC}Created: 2019/04/01 19:30:42 by mbeuil       +#+#+#+#+#+   +#+      ${LCYAN}     */"
+echo -e "/*   ${NC}                                                  #+#    #+#       ${LCYAN}      */"
+echo -e "/*   ${NC}Press ${LCYAN}[Enter]${NC} key to continue                    ###   ########.fr  ${LCYAN}     */"
+echo -e "/*                                                                            */"
+echo -e "/* ************************************************************************** */${LCYAN}"
 echo
 
 
