@@ -10,12 +10,6 @@ GREEN='\033[1;32m'
 LCYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
-# ------------
-# Progress Bar
-# ------------
-
-BAR='####################'   # this is full bar, e.g. 20 chars
-
 # --------------
 # Pause function
 # --------------
@@ -51,7 +45,7 @@ echo
 # ---------------------
 
 # App name selection
-echo -e "Name your new ${YELLOW}React App ${NC}:"
+echo -e "Name your new React App :"
 read app_name
 echo
 
@@ -143,12 +137,12 @@ echo
 echo -e "${GREEN}Configuring your development environment... ${NC}"
 
 echo
-echo -e "1/6 ${LCYAN}Prettier Installation... ${NC}"
+echo -e "1/6 ${LCYAN}Prettier and Eslint installation... ${NC}"
 echo
 $pkg_cmd -D eslint prettier
 
 echo
-echo -e "2/6 ${LCYAN}Eslint Installation with airbnb's config... ${NC}"
+echo -e "2/6 ${LCYAN}Eslint's plugins with airbnb's config installation ... ${NC}"
 echo
 npx install-peerdeps --dev eslint-config-airbnb
 
@@ -334,7 +328,7 @@ if [ "$css_cmd" == "false" ]; then
   break
 else
   echo
-  echo -e "${YELLOW}Installing yout CSS in JS library...${NC}"
+  echo -e "${YELLOW}CSS in JS library installation ...${NC}"
   echo
   $css_cmd
   echo
