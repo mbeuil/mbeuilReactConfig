@@ -45,12 +45,14 @@ echo
 # ---------------------
 
 # App name selection
+
 echo -e "Name your new React App :"
+echo -e "${RED}* name can no longer contain capital letters${NC}"
 read app_name
-echo
 
 # Framework Manager prompt
 
+echo
 echo "Which framework are you using ?"
 select framework_choices in "create-react-app" "Cancel"; do
   case $framework_choices in
@@ -137,9 +139,9 @@ echo
 echo -e "${GREEN}Configuring your development environment... ${NC}"
 
 echo
-echo -e "1/6 ${LCYAN}Prettier and Eslint installation... ${NC}"
+echo -e "1/6 ${LCYAN}Prettier and Eslint installation ... ${NC}"
 echo
-$pkg_cmd -D eslint prettier
+$pkg_cmd -D eslint@^6.0.0 prettier
 
 echo
 echo -e "2/6 ${LCYAN}Eslint's plugins with airbnb's config installation ... ${NC}"
@@ -147,7 +149,7 @@ echo
 npx install-peerdeps --dev eslint-config-airbnb
 
 echo
-echo -e "3/6 ${LCYAN}Making ESlint and Prettier play nice with each other... ${NC}"
+echo -e "3/6 ${LCYAN}Making ESlint and Prettier play nice with each other ... ${NC}"
 echo "See https://github.com/prettier/eslint-config-prettier for more details."
 echo
 $pkg_cmd -D eslint-config-prettier eslint-plugin-prettier
@@ -308,6 +310,7 @@ fi
 # ------------------
 
 echo
+echo
 echo -e "${GREEN}Configuring other libraries... ${NC}"
 
 # CSS in JS libraries
@@ -333,7 +336,6 @@ else
   $css_cmd
   echo
 fi
-
 
 echo
 echo -e "${GREEN}Finished setting up !${NC}"
