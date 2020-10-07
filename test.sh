@@ -138,10 +138,12 @@ fi
 echo
 echo -e "${GREEN}Configuring your development environment... ${NC}"
 
+
+
 echo
-echo -e "1/6 ${LCYAN}Prettier and Eslint installation ... ${NC}"
+echo -e "1/6 ${LCYAN}Prettier installation ... ${NC}"
 echo
-$pkg_cmd -D eslint@^6.0.0 prettier
+$pkg_cmd -D prettier
 
 echo
 echo -e "2/6 ${LCYAN}Eslint's plugins with airbnb's config installation ... ${NC}"
@@ -185,6 +187,8 @@ else
     ]
   }
 }' >> .eslintrc${config_extension}
+
+echo SKIP_PREFLIGHT_CHECK=true >> .env
 fi
 
 
@@ -231,7 +235,6 @@ if [ "$skip_vscode" == "true" ]; then
   break
 else
   echo -e "6/6 ${YELLOW}Config file for .vscode builded !${NC}"
-  > .prettierrc${config_extension} # truncates existing file (or creates empty)
 
   mkdir .vscode
 
@@ -303,6 +306,10 @@ else
   "php.suggest.basic": false
 }
 ' >> ./.vscode/settings.json
+
+echo .vscode/ >> .gitignore
+echo .env >> .gitignore
+
 fi
 
 # ------------------
