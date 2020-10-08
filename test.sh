@@ -180,6 +180,8 @@ else
     "node": true
   },
   "rules": {
+    "import/prefer-default-export": "off",
+    "react/prop-types": "off",
     "no-console": "off",
     "react/jsx-filename-extension": [
       1,
