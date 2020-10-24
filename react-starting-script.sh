@@ -54,7 +54,7 @@ read app_name
 
 echo
 echo "Which framework are you using ?"
-select framework_choices in "create-react-app" "Cancel"; do
+select framework_choices in "create-react-app" "skip" "Cancel"; do
   case $framework_choices in
     create-react-app ) framework_init="npx create-react-app ${app_name}"; break;;
     skip ) framework_init="skip"; break;;
