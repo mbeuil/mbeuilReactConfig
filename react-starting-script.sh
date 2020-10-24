@@ -8,7 +8,7 @@ RED="\033[0;31m"
 YELLOW='\033[1;33m'
 GREEN='\033[1;32m'
 LCYAN='\033[1;36m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
 # --------------
 # Pause function
@@ -57,19 +57,24 @@ echo "Which framework are you using ?"
 select framework_choices in "create-react-app" "Cancel"; do
   case $framework_choices in
     create-react-app ) framework_init="npx create-react-app ${app_name}"; break;;
+    skip ) framework_init="skip"; break;;
     Cancel ) exit;;
   esac
 done
 
-echo
-echo -e "${LCYAN}Creating your repo and installing your ${app_name} react app... ${NC}"
+if [ "$framework_init" != "skip" ]; then
+  echo
+  echo -e "${LCYAN}Creating your repo and installing your ${app_name} react app... ${NC}"
+  echo
+  $framework_init 
+  echo
+  echo "Switch to ${app_name} directory."
+  cd ${app_name}
+fi
 
-echo
-$framework_init 
 
-echo
-echo "Switch to ${app_name} directory."
-cd ${app_name}
+
+
 
 # --------------------------------------
 # Prompts for configuration preferences
@@ -148,7 +153,7 @@ $pkg_cmd -D prettier
 echo
 echo -e "2/6 ${LCYAN}Eslint's plugins with airbnb's config installation ... ${NC}"
 echo
-npx install-peerdeps --dev eslint-config-airbnb
+npm install --save-dev eslint-config-kentcdodds
 
 echo
 echo -e "3/6 ${LCYAN}Making ESlint and Prettier play nice with each other ... ${NC}"
@@ -167,30 +172,36 @@ else
   echo
   echo ${config_opening}'
   "extends": [
-    "airbnb",
-    "airbnb/hooks",
+    "kentcdodds",
+    "kentcdodds/react",
+    "kentcdodds/jest",
+    "kentcdodds/webpack",
     "plugin:prettier/recommended",
     "prettier/react"
   ],
-  "env": {
-    "browser": true,
-    "commonjs": true,
-    "es6": true,
-    "jest": true,
-    "node": true
-  },
   "rules": {
-    "import/prefer-default-export": "off",
-    "react/prop-types": "off",
+    // react v17 rules for new JSX transformation
+    "react/react-in-jsx-scope": "off",
+
+    "no-process-exit": "off",
+    "import/no-dynamic-require": "off",
+    "import/no-unassigned-import": "off",
     "no-console": "off",
-    "react/jsx-filename-extension": [
-      1,
-      {"extensions": [".js", ".jsx", ".ts", ".tsx"]}
-    ]
+    "no-nested-ternary": "off",
+    "no-useless-catch": "off",
+    "react/prop-types": "off"
   }
 }' >> .eslintrc${config_extension}
 
-echo SKIP_PREFLIGHT_CHECK=true >> .env
+echo  SKIP_PREFLIGHT_CHECK=true >> .env
+
+echo  node_modules
+      coverage
+      build 
+
+      /src/index.js
+      >> .eslintignore
+
 fi
 
 
@@ -345,6 +356,13 @@ else
   $css_cmd
   echo
 fi
+
+echo
+echo -e "${YELLOW}Installing husky pre-commit modul ...${NC}"
+$pkg_cmd husky
+echo
+echo -e "${LCYAN} Don't forget to add a eslint script and the husky config to your package.json.${NC}"
+
 
 echo
 echo -e "${GREEN}Finished setting up !${NC}"
