@@ -151,12 +151,17 @@ echo
 $pkg_cmd -D prettier
 
 echo
-echo -e "2/6 ${LCYAN}Eslint's plugins with airbnb's config installation ... ${NC}"
+echo -e "2/6 ${LCYAN}KCD's eslint config installation ... ${NC}"
 echo
 npm install --save-dev eslint-config-kentcdodds
 
 echo
-echo -e "3/6 ${LCYAN}Making ESlint and Prettier play nice with each other ... ${NC}"
+echo -e "3/7 ${LCYAN}Eslint's plugin import installation ... ${NC}"
+echo
+$pkg_cmd -D eslint-plugin-import
+
+echo
+echo -e "4/7 ${LCYAN}Making ESlint and Prettier play nice with each other ... ${NC}"
 echo "See https://github.com/prettier/eslint-config-prettier for more details."
 echo
 $pkg_cmd -D eslint-config-prettier eslint-plugin-prettier
@@ -166,7 +171,7 @@ if [ "$skip_eslint_setup" == "true" ]; then
   break
 else
   echo
-  echo -e "4/6 ${YELLOW}Config file for Eslintrc builded !${NC}"
+  echo -e "5/7 ${YELLOW}Config file for Eslintrc builded !${NC}"
   > ".eslintrc${config_extension}" # truncates existing file (or creates empty)
 
   echo
@@ -179,6 +184,13 @@ else
     "plugin:prettier/recommended",
     "prettier/react"
   ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
+  },
   "rules": {
     // react v17 rules for new JSX transformation
     "react/react-in-jsx-scope": "off",
@@ -192,6 +204,14 @@ else
     "react/prop-types": "off"
   }
 }' >> .eslintrc${config_extension}
+
+  echo
+  echo ${config_opening}'
+  "compilerOptions": {
+    "baseUrl": "./src"
+  },
+  "include": ["src"]
+}' >> .jsconfig.json
 
 echo  SKIP_PREFLIGHT_CHECK=true >> .env
 
@@ -208,7 +228,7 @@ fi
 if [ "$skip_prettier_setup" == "true" ]; then
   break
 else
-  echo -e "5/6 ${YELLOW}Config file for Prettier builded !${NC}"
+  echo -e "6/7 ${YELLOW}Config file for Prettier builded !${NC}"
   > .prettierrc${config_extension} # truncates existing file (or creates empty)
 
   echo ${config_opening}'
@@ -247,7 +267,7 @@ echo
 if [ "$skip_vscode" == "true" ]; then
   break
 else
-  echo -e "6/6 ${YELLOW}Config file for .vscode builded !${NC}"
+  echo -e "7/7 ${YELLOW}Config file for .vscode builded !${NC}"
 
   mkdir .vscode
 
