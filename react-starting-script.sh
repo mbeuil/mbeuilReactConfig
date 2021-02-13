@@ -141,19 +141,33 @@ fi
 # ----------------------
 
 echo
-echo -e "${GREEN}Configuring your development environment... ${NC}"
-
-
+echo "Do you want to use a specific Eslint config ?"
+select lint_choices in "KCD" "basic" "Cancel"; do
+  case $lint_choices in
+    create-react-app ) lint="yes"; break;;
+    skip ) lint="no"; break;;
+    Cancel ) exit;;
+  esac
+done
 
 echo
 echo -e "1/6 ${LCYAN}Prettier installation ... ${NC}"
 echo
 $pkg_cmd -D prettier
 
-echo
-echo -e "2/6 ${LCYAN}KCD's eslint config installation ... ${NC}"
-echo
-npm install --save-dev eslint-config-kentcdodds
+if [ "$lint" != "yes" ]; then
+  echo
+  echo -e "2/6 ${LCYAN}KCD's eslint config installation ... ${NC}"
+  echo
+  npm install --save-dev eslint-config-kentcdodds
+fi
+
+if [ "$lint" != "no" ]; then
+  echo
+  echo -e "2/6 ${LCYAN}Eslint config installation ... ${NC}"
+  echo
+  npm install --save-dev eslint
+fi
 
 echo
 echo -e "3/7 ${LCYAN}Eslint's plugin import installation ... ${NC}"
@@ -172,38 +186,56 @@ if [ "$skip_eslint_setup" == "true" ]; then
 else
   echo
   echo -e "5/7 ${YELLOW}Config file for Eslintrc builded !${NC}"
-  > ".eslintrc${config_extension}" # truncates existing file (or creates empty)
 
-  echo
-  echo ${config_opening}'
-  "extends": [
-    "kentcdodds",
-    "kentcdodds/react",
-    "kentcdodds/jest",
-    "kentcdodds/webpack",
-    "plugin:prettier/recommended",
-    "prettier/react"
-  ],
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "moduleDirectory": ["node_modules", "src/"]
+  if [ "$lint" != "yes" ]; then
+    echo
+    > ".eslintrc${config_extension}" # truncates existing file (or creates empty)
+
+    echo
+    echo ${config_opening}'
+      "extends": [
+        "kentcdodds",
+        "kentcdodds/react",
+        "kentcdodds/jest",
+        "kentcdodds/webpack",
+        "plugin:prettier/recommended",
+        "prettier/react"
+      ],
+      "settings": {
+        "import/resolver": {
+          "node": {
+          "moduleDirectory": ["node_modules", "src/"]
+          }
+        }
+      },
+      "rules": {
+        // react v17 rules for new JSX transformation
+        "react/react-in-jsx-scope": "off",
+
+        "no-process-exit": "off",
+        "import/no-dynamic-require": "off",
+        "import/no-unassigned-import": "off",
+        "no-console": "off",
+        "no-nested-ternary": "off",
+        "no-useless-catch": "off",
+        "react/prop-types": "off"
       }
-    }
-  },
-  "rules": {
-    // react v17 rules for new JSX transformation
-    "react/react-in-jsx-scope": "off",
+    }' >> .eslintrc${config_extension}
+    echo
+  fi
 
-    "no-process-exit": "off",
-    "import/no-dynamic-require": "off",
-    "import/no-unassigned-import": "off",
-    "no-console": "off",
-    "no-nested-ternary": "off",
-    "no-useless-catch": "off",
-    "react/prop-types": "off"
-  }
-}' >> .eslintrc${config_extension}
+  if [ "$lint" != "no" ]; then
+    echo
+    > ".eslintrc${config_extension}" # truncates existing file (or creates empty)
+
+    echo
+    echo ${config_opening}'
+      "extends": [
+        "react-app"
+      ]
+    }' >> .eslintrc${config_extension}
+    echo
+  fi
 
   echo
   echo ${config_opening}'
@@ -212,18 +244,6 @@ else
   },
   "include": ["src"]
 }' >> .jsconfig.json
-
-echo  SKIP_PREFLIGHT_CHECK=true >> .env
-
-echo  node_modules
-      coverage
-      build 
-
-      /src/index.js
-      >> .eslintignore
-
-fi
-
 
 if [ "$skip_prettier_setup" == "true" ]; then
   break
