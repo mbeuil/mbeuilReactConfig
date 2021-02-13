@@ -47,7 +47,7 @@ echo
 # App name selection
 
 echo -e "Name your new React App :"
-echo -e "${RED}* name can no longer contain capital letters${NC}"
+echo -e "${RED}/!\ name can no longer contain capital letters${NC}"
 read app_name
 
 # Framework Manager prompt
@@ -79,6 +79,10 @@ fi
 # --------------------------------------
 # Prompts for configuration preferences
 # --------------------------------------
+
+echo
+echo
+echo -e "${GREEN}Base Config${NC}"
 
 # Package Manager Prompt
 
@@ -140,7 +144,6 @@ fi
 # Perform Configuration
 # ----------------------
 
-echo
 echo "Do you want to use a specific Eslint config ?"
 select lint_choices in "KCD" "basic" "Cancel"; do
   case $lint_choices in
@@ -149,33 +152,34 @@ select lint_choices in "KCD" "basic" "Cancel"; do
     Cancel ) exit;;
   esac
 done
+echo
 
 echo
-echo -e "1/6 ${LCYAN}Prettier installation ... ${NC}"
+echo -e "${LCYAN}1/7 Prettier installation ... ${NC}"
 echo
 $pkg_cmd -D prettier
 
-if [ "$lint" != "yes" ]; then
+if [ "$lint" == "yes" ]; then
   echo
-  echo -e "2/6 ${LCYAN}KCD's eslint config installation ... ${NC}"
+  echo -e "${LCYAN}2/7 KCD's eslint config installation ... ${NC}"
   echo
   npm install --save-dev eslint-config-kentcdodds
 fi
 
-if [ "$lint" != "no" ]; then
+if [ "$lint" == "no" ]; then
   echo
-  echo -e "2/6 ${LCYAN}Eslint config installation ... ${NC}"
+  echo -e "${LCYAN}2/7 Eslint config installation ... ${NC}"
   echo
   npm install --save-dev eslint
 fi
 
 echo
-echo -e "3/7 ${LCYAN}Eslint's plugin import installation ... ${NC}"
+echo -e "${LCYAN}3/7 Eslint's plugin import installation ... ${NC}"
 echo
 $pkg_cmd -D eslint-plugin-import
 
 echo
-echo -e "4/7 ${LCYAN}Making ESlint and Prettier play nice with each other ... ${NC}"
+echo -e "${LCYAN}4/7 Making ESlint and Prettier play nice with each other ... ${NC}"
 echo "See https://github.com/prettier/eslint-config-prettier for more details."
 echo
 $pkg_cmd -D eslint-config-prettier eslint-plugin-prettier
@@ -185,70 +189,70 @@ if [ "$skip_eslint_setup" == "true" ]; then
   break
 else
   echo
-  echo -e "5/7 ${YELLOW}Config file for Eslintrc builded !${NC}"
+  echo -e "${LCYAN}5/7 Config file for Eslintrc builded !${NC}"
 
-  if [ "$lint" != "yes" ]; then
-    echo
+  if [ "$lint" == "yes" ]; then
     > ".eslintrc${config_extension}" # truncates existing file (or creates empty)
 
-    echo
     echo ${config_opening}'
-      "extends": [
-        "kentcdodds",
-        "kentcdodds/react",
-        "kentcdodds/jest",
-        "kentcdodds/webpack",
-        "plugin:prettier/recommended",
-        "prettier/react"
-      ],
-      "settings": {
-        "import/resolver": {
-          "node": {
-          "moduleDirectory": ["node_modules", "src/"]
-          }
-        }
-      },
-      "rules": {
-        // react v17 rules for new JSX transformation
-        "react/react-in-jsx-scope": "off",
-
-        "no-process-exit": "off",
-        "import/no-dynamic-require": "off",
-        "import/no-unassigned-import": "off",
-        "no-console": "off",
-        "no-nested-ternary": "off",
-        "no-useless-catch": "off",
-        "react/prop-types": "off"
+  "extends": [
+    "kentcdodds",
+    "kentcdodds/react",
+    "kentcdodds/jest",
+    "kentcdodds/webpack",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
+  "settings": {
+    "import/resolver": {
+      "node": {
+      "moduleDirectory": ["node_modules", "src/"]
       }
-    }' >> .eslintrc${config_extension}
+    }
+  },
+  "rules": {
+    // react v17 rules for new JSX transformation
+    "react/react-in-jsx-scope": "off",
+
+    "no-process-exit": "off",
+    "import/no-dynamic-require": "off",
+    "import/no-unassigned-import": "off",
+    "no-console": "off",
+    "no-nested-ternary": "off",
+    "no-useless-catch": "off",
+    "react/prop-types": "off"
+  }
+}' >> .eslintrc${config_extension}
     echo
   fi
 
-  if [ "$lint" != "no" ]; then
+  if [ "$lint" == "no" ]; then
     echo
     > ".eslintrc${config_extension}" # truncates existing file (or creates empty)
 
     echo
     echo ${config_opening}'
-      "extends": [
-        "react-app"
-      ]
-    }' >> .eslintrc${config_extension}
+  "extends": ["react-app"]
+}' >> .eslintrc${config_extension}
     echo
   fi
+
+  echo "Done !"
 
   echo
   echo ${config_opening}'
-  "compilerOptions": {
-    "baseUrl": "./src"
-  },
-  "include": ["src"]
-}' >> .jsconfig.json
+    "compilerOptions": {
+      "baseUrl": "./src"
+    },
+    "include": ["src"]
+  }' >> .jsconfig.json
+fi
+echo
 
 if [ "$skip_prettier_setup" == "true" ]; then
   break
 else
-  echo -e "6/7 ${YELLOW}Config file for Prettier builded !${NC}"
+  echo -e "${LCYAN}6/7 Config file for Prettier builded !${NC}"
   > .prettierrc${config_extension} # truncates existing file (or creates empty)
 
   echo ${config_opening}'
@@ -271,6 +275,9 @@ else
 }' >> .prettierrc${config_extension}
 fi
 
+echo
+echo "Done !"
+
 # Vscode config
 
 echo
@@ -287,7 +294,7 @@ echo
 if [ "$skip_vscode" == "true" ]; then
   break
 else
-  echo -e "7/7 ${YELLOW}Config file for .vscode builded !${NC}"
+  echo -e "${LCYAN}7/7 Config file for .vscode builded !${NC}"
 
   mkdir .vscode
 
@@ -363,6 +370,9 @@ else
 echo .vscode/ >> .gitignore
 echo .env >> .gitignore
 
+echo
+echo "Done !"
+
 fi
 
 # ------------------
@@ -397,11 +407,11 @@ else
   echo
 fi
 
-echo
 echo -e "${YELLOW}Installing husky pre-commit modul ...${NC}"
+echo
 $pkg_cmd husky
 echo
-echo -e "${LCYAN} Don't forget to add a eslint script and the husky config to your package.json.${NC}"
+echo -e "${LCYAN}Don't forget to add a eslint script and the husky config to your package.json.${NC}"
 
 
 echo
