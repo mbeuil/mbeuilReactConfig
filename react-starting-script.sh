@@ -144,8 +144,8 @@ echo
 echo "Do you want to use a specific Eslint config ?"
 select lint_choices in "KCD" "basic" "Cancel"; do
   case $lint_choices in
-    create-react-app ) lint="yes"; break;;
-    skip ) lint="no"; break;;
+    KCD ) lint="yes"; break;;
+    basic ) lint="no"; break;;
     Cancel ) exit;;
   esac
 done
